@@ -24,7 +24,13 @@ export default class HomeScreen extends Component {
             left={() => <List.Icon icon="folder" />}
          />
          <List.Item
+           title="Contacts"
+           onPress={() => this.props.navigation.navigate('Con')}
+           left={() => <List.Icon icon="folder" />}
+        />
+         <List.Item
            title="GPS"
+           onPress={() => this.props.navigation.navigate('Geo')}
            left={() => <List.Icon icon="room" />}
          />
          <List.Item
@@ -45,7 +51,7 @@ const theme = {
   roundness: 4,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#314674',
+    primary: '#ffffff', //#314674
     accent: '#f1c40f',
     background:  'blue',
   }

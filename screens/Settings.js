@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { AsyncStorage, Drawer,DefaultTheme,Switch,Appbar,List,Checkbox,Provider as PaperProvider } from 'react-native-paper';
+import { AsyncStorage } from "react-native"
+import { Drawer,DefaultTheme,Switch,Appbar,List,Checkbox,Provider as PaperProvider } from 'react-native-paper';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 
@@ -7,39 +8,59 @@ export default class Settings extends Component {
 
   constructor(props) {
     super(props);
-    alert(1);
-    AsyncStorage.setItem('primair_scherm','keuze');
+    this._retrieveData();
   }
 
   static navigationOptions = {
-    header: null
+    header: null,
   };
 
   state = {
     isSwitchOn: false,
     active: 'algemeen',
+    kleur: 'blauw',
   };
 
   saveData(keuze) {
-    //AsyncStorage.setItem('primair_scherm','keuze');
-    alert(1);
-  }
+    AsyncStorage.setItem('primair_scherm',keuze);
+  };
+  saveData2(keuze) {
+    AsyncStorage.setItem('kleur',keuze);
+  };
 
   _retrieveData = async () => {
+
+    //get primair scherm
     try {
       const value = await AsyncStorage.getItem('primair_scherm');
       if (value !== null) {
-        // We have data!!
-        alert(value);
+        this.setState({ active: value });
       }
      } catch (error) {
        alert(error);
+       AsyncStorage.setItem('primair_scherm','algemeen');
+       this.setState({ active: 'algemeen' });
      }
-  }
+
+     //get primair color
+     try {
+       const value = await AsyncStorage.getItem('kleur');
+       if (value !== null) {
+         this.setState({ kleur: value });
+       }
+      } catch (error) {
+        alert(error);
+        AsyncStorage.setItem('kleur','blauw');
+        this.setState({ kleur: 'blauw' });
+      }
+  };
+
+
 
   render() {
     const { isSwitchOn } = this.state;
     const { active } = this.state;
+    const { kleur } = this.state;
     return (
       <PaperProvider theme={theme}>
         <Appbar.Header >
@@ -55,7 +76,6 @@ export default class Settings extends Component {
                   title="Activiteiten"
                   left={props => <List.Icon {...props} icon="nature-people" />}
                 >
-                  <List.Item title="blablabla" />
                   <List.Item title="Primair scherm:" />
                   <Drawer.Section>
                     <Drawer.Item
@@ -110,13 +130,29 @@ export default class Settings extends Component {
                 </List.Accordion>
 
                 <List.Accordion
-                  title="Thema"
+                  title="Primary color"
                   left={props => <List.Icon {...props} icon="color-lens" />}
                   expanded={this.state.expanded}
                   onPress={this._handlePress}
                 >
-                  <List.Item title="First item" />
-                  <List.Item title="Second item" />
+                  <Drawer.Section>
+                    <Drawer.Item
+                      label="blauw"
+                      active={kleur === 'blauw'}
+                      onPress={() => {
+                        this.setState({ kleur: 'blauw' });
+                        this.saveData2('blauw');
+                      }}
+                    />
+                    <Drawer.Item
+                      label="groen"
+                      active={kleur === 'groen'}
+                      onPress={() => {
+                        this.setState({ kleur: 'groen' });
+                        this.saveData2('groen');
+                       }}
+                    />
+                  </Drawer.Section>
                 </List.Accordion>
               </List.Section>
      </PaperProvider>
@@ -131,9 +167,9 @@ const theme = {
   roundness: 4,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#314674',
+    primary: '#314674', //#314674
     accent: '#f1c40f',
-    background:  'blue',
+    background:  '#becce2',
   }
 
 };

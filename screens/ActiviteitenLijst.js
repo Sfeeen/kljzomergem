@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage} from 'react-native';
 import {DefaultTheme, Appbar, BottomNavigation, Provider as PaperProvider } from 'react-native-paper';
 
 import Lijst from '../components/Lijst';
@@ -18,12 +18,53 @@ const PluszestienRoute = () => <Lijst data={minnegen} stijl={styles.flatlistview
 const PlustwintigRoute = () =>  <Lijst data={minnegen} stijl={styles.flatlistview_plustwintig}></Lijst>;
 
 type Props = {};
-
-export default class ActiviteitenLijst extends Component<Props> {
+var color = "#314674";
+export default class ActiviteitenLijst extends Component {
 
       static navigationOptions = {
         header: null
       }
+
+      constructor(props) {
+        super(props);
+        this._retrieveData();
+      }
+
+      _retrieveData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('primair_scherm');
+          if (value !== null) {
+            var keuze = 0;
+            switch(value) {
+              case "algemeen":
+                keuze = 1;
+                break;
+              case "minnegen":
+                keuze = 1;
+                break;
+              case "mintwaalf":
+                keuze = 2;
+                break;
+              case "minzestien":
+                keuze = 3;
+                break;
+              case "pluszestien":
+                keuze = 4;
+                break;
+              case "plustwintig":
+                keuze = 5;
+                break;
+              default:
+                keuze = 0;
+                break;
+            }
+            this.setState({ index: keuze });
+          }
+         } catch (error) {
+           alert(error);
+           this.setState({ index: 0 });
+         }
+      };
 
       state = {
         index: 0,
@@ -109,15 +150,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const theme = {
-  ...DefaultTheme,
-  dark: true,
-  roundness: 4,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#314674',
-    accent: '#f1c40f',
-    background:  '#becce2',
-  }
 
-};
+  const theme = {
+    ...DefaultTheme,
+    dark: true,
+    roundness: 4,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#314674', //#314674
+      accent: '#f1c40f',
+      background:  '#becce2',
+    }
+
+  };
