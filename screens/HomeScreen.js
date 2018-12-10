@@ -34,6 +34,11 @@ export default class HomeScreen extends Component {
            left={() => <List.Icon icon="room" />}
          />
          <List.Item
+           title="Camera"
+           onPress={() => this.props.navigation.navigate('Cam')}
+           left={() => <List.Icon icon="room" />}
+         />
+         <List.Item
            title="instellingen"
            onPress={() => this.props.navigation.navigate('Set')}
            left={() => <List.Icon icon="settings" />}

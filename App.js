@@ -9,6 +9,7 @@ import ActiviteitenLijst from './screens/ActiviteitenLijst';
 import Settings from './screens/Settings';
 import Geolocation from './screens/Geolocator';
 import Contacts from './screens/Contacts';
+import TryCamera from './screens/TryCamera';
 
 const RootStack = createStackNavigator({
   Home: HomeScreen,
@@ -16,6 +17,7 @@ const RootStack = createStackNavigator({
   Set: Settings,
   Geo: Geolocation,
   Con: Contacts,
+  Cam: TryCamera,
 });
 
 const App = createAppContainer(RootStack);

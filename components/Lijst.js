@@ -3,14 +3,13 @@ import {Platform, StyleSheet,FlatList, Text, View} from 'react-native';
 import {Provider as PaperProvider } from 'react-native-paper';
 
 class FlatListItem extends Component {
+
   render() {
-    console.log(this.props.stijl);
-    console.log(this.props.data);
     return (
 
       <View style={[styles.flatlistview_std,this.props.stijl]}>
-        <Text style={styles.flatlisttitle}>{this.props.item.titel.toUpperCase()}</Text>
-        <Text style={styles.flatlistitem}>{this.props.item.content}</Text>
+        <Text style={styles.flatlisttitle}>{this.props.item.title.toUpperCase()}</Text>
+        <Text style={styles.flatlistitem}>{this.props.item.description}</Text>
       </View>
     );
   }
