@@ -9,6 +9,7 @@ class Geolocation extends Component {
     this.state = {
       latitude: null,
       longitude: null,
+      opklj: "nee",
       error: null,
     };
 
@@ -40,9 +41,14 @@ class Geolocation extends Component {
 
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
+        var opKLJ = "nee";
+        if(position.coords.latitude > 51.119651 && position.coords.latitude < 51.121126){
+          if(position.coords.longitude > 3.560335 && position.coords.longitude < 3.562126) opKLJ = "ja";
+        }
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
+          opklj: opKLJ,
           error: null,
         });
       },
@@ -61,7 +67,9 @@ class Geolocation extends Component {
       <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Latitude: {this.state.latitude}</Text>
         <Text>Longitude: {this.state.longitude}</Text>
+        <Text>opklj: {this.state.opklj}</Text>
         {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
+
       </View>
     );
   }

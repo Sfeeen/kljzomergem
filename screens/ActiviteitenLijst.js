@@ -6,17 +6,6 @@ import Lijst from '../components/Lijst';
 import home from '../data/home_dummydata';
 import minnegen from '../data/minnegen_dummydata';
 
-
-
-//const HomeRoute = () => <View style={styles.container}><Text style={styles.label}>Welcome to the Facebook SDK for React Native!</Text><FBLoginButton /></View>;
-const HomeRoute = () => <Lijst data={home} stijl={styles.flatlistview_home}></Lijst>;
-//const HomeRoute = () => <ListSection />
-const MinnegenRoute = () => <Lijst data={minnegen} stijl={styles.flatlistview_minnegen}></Lijst>;
-const MintwaalfRoute = () => <Lijst data={minnegen} stijl={styles.flatlistview_mintwaalf}></Lijst>;
-const MinzestienRoute = () => <Lijst data={minnegen} stijl={styles.flatlistview_minzestien}></Lijst>;
-const PluszestienRoute = () => <Lijst data={minnegen} stijl={styles.flatlistview_pluszestien}></Lijst>;
-const PlustwintigRoute = () =>  <Lijst data={minnegen} stijl={styles.flatlistview_plustwintig}></Lijst>;
-
 type Props = {};
 var color = "#314674";
 export default class ActiviteitenLijst extends Component {
@@ -28,6 +17,10 @@ export default class ActiviteitenLijst extends Component {
       constructor(props) {
         super(props);
         this._retrieveData();
+      }
+
+      componentDidMount() {
+        this.fetchData();
       }
 
       _retrieveData = async () => {
@@ -76,21 +69,45 @@ export default class ActiviteitenLijst extends Component {
           { key: 'pluszestien', title: '+16', icon: 'beach-access', color: '#7d1935' },
           { key: 'plustwintig', title: '+20', icon: 'insert-emoticon', color: '#ff7400' },
         ],
+        tes : [   {
+              "id":"23",
+              "title":"failed",
+              "date":"2018-12-16",
+              "time":"13u30-17u00",
+              "description":"failed",
+              "age_group":"-9"
+            }
+        ],
       };
 
       _handleIndexChange = index => this.setState({ index });
 
       _renderScene = BottomNavigation.SceneMap({
-        home: HomeRoute,
-        minnegen: MinnegenRoute,
-        mintwaalf: MintwaalfRoute,
-        minzestien: MinzestienRoute,
-        pluszestien: PluszestienRoute,
-        plustwintig: PlustwintigRoute,
+        home: () => <Lijst data={this.state.tes} stijl={styles.flatlistview_home}></Lijst>,
+        minnegen:() => <Lijst data={this.state.tes} stijl={styles.flatlistview_minnegen}></Lijst>,
+        mintwaalf: () => <Lijst data={this.state.tes} stijl={styles.flatlistview_mintwaalf}></Lijst>,
+        minzestien: () => <Lijst data={this.state.tes} stijl={styles.flatlistview_minzestien}></Lijst>,
+        pluszestien:() => <Lijst data={this.state.tes} stijl={styles.flatlistview_pluszestien}></Lijst>,
+        plustwintig: () => <Lijst data={this.state.tes} stijl={styles.flatlistview_plustwintig}></Lijst>,
       });
 
+      fetchData = async () => {
+        try {
+          console.log("try");
+          let response = await fetch(
+            'http://www.kljzomergem.be/minnegenapi.php',
+          );
+          let responseJson = await response.json();
+          this.setState({ tes: responseJson });
+          console.log(responseJson);
+          this.forceUpdate();
+        } catch (error) {
+          console.error(error);
+        }
+      };
 
       render() {
+        //console.log(this.state.data);
         return (
           <PaperProvider theme={theme}>
             <Appbar.Header >
