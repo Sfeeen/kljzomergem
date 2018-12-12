@@ -3,6 +3,7 @@ import {Platform, StyleSheet, Text, View, AsyncStorage} from 'react-native';
 import {DefaultTheme, Appbar, BottomNavigation, Provider as PaperProvider } from 'react-native-paper';
 
 import Lijst from '../components/Lijst';
+import theme from '../theme/theme.js';
 
 type Props = {};
 var color = "#314674";
@@ -101,7 +102,7 @@ export default class ActiviteitenLijst extends Component {
       fetchDatahome = async () => {
         try {
           let response = await fetch(
-            'http://www.kljzomergem.be/mintwaalfapi.php',
+            'http://www.kljzomergem.be/homeapi.php',
           );
           let responseJson = await response.json();
           this.setState({ datahome: responseJson });
@@ -217,30 +218,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#e89958',
     borderColor: '#ff7400',
   },
-  container: {
-  flex: 1,
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: '#F5FCFF',
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: 'normal',
-    marginBottom: 48,
-  },
+
 });
-
-
-  const theme = {
-    ...DefaultTheme,
-    dark: true,
-    roundness: 4,
-    colors: {
-      ...DefaultTheme.colors,
-      primary: '#314674', //#314674
-      accent: '#f1c40f',
-      background:  '#becce2',
-    }
-
-  };

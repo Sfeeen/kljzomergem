@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { AsyncStorage } from "react-native"
 import { Drawer,DefaultTheme,Switch,Appbar,List,Checkbox,Provider as PaperProvider } from 'react-native-paper';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import theme from '../theme/theme.js';
 
 
 export default class Settings extends Component {
@@ -18,15 +19,12 @@ export default class Settings extends Component {
   state = {
     isSwitchOn: false,
     active: 'algemeen',
-    kleur: 'blauw',
   };
 
   saveData(keuze) {
     AsyncStorage.setItem('primair_scherm',keuze);
   };
-  saveData2(keuze) {
-    AsyncStorage.setItem('kleur',keuze);
-  };
+
 
   _retrieveData = async () => {
 
@@ -42,17 +40,6 @@ export default class Settings extends Component {
        this.setState({ active: 'algemeen' });
      }
 
-     //get primair color
-     try {
-       const value = await AsyncStorage.getItem('kleur');
-       if (value !== null) {
-         this.setState({ kleur: value });
-       }
-      } catch (error) {
-        alert(error);
-        AsyncStorage.setItem('kleur','blauw');
-        this.setState({ kleur: 'blauw' });
-      }
   };
 
 
@@ -60,7 +47,6 @@ export default class Settings extends Component {
   render() {
     const { isSwitchOn } = this.state;
     const { active } = this.state;
-    const { kleur } = this.state;
     return (
       <PaperProvider theme={theme}>
         <Appbar.Header >
@@ -128,48 +114,9 @@ export default class Settings extends Component {
                     />
                   </Drawer.Section>
                 </List.Accordion>
-
-                <List.Accordion
-                  title="Primary color"
-                  left={props => <List.Icon {...props} icon="color-lens" />}
-                  expanded={this.state.expanded}
-                  onPress={this._handlePress}
-                >
-                  <Drawer.Section>
-                    <Drawer.Item
-                      label="blauw"
-                      active={kleur === 'blauw'}
-                      onPress={() => {
-                        this.setState({ kleur: 'blauw' });
-                        this.saveData2('blauw');
-                      }}
-                    />
-                    <Drawer.Item
-                      label="groen"
-                      active={kleur === 'groen'}
-                      onPress={() => {
-                        this.setState({ kleur: 'groen' });
-                        this.saveData2('groen');
-                       }}
-                    />
-                  </Drawer.Section>
-                </List.Accordion>
               </List.Section>
      </PaperProvider>
     );
   }
 }
 module.exports = Settings;
-
-const theme = {
-  ...DefaultTheme,
-  dark: true,
-  roundness: 4,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#314674', //#314674
-    accent: '#f1c40f',
-    background:  '#becce2',
-  }
-
-};

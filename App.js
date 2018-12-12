@@ -7,17 +7,17 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import HomeScreen from './screens/HomeScreen';
 import ActiviteitenLijst from './screens/ActiviteitenLijst';
 import Settings from './screens/Settings';
-import Geolocation from './screens/Geolocator';
-import Contacts from './screens/Contacts';
-import TryCamera from './screens/TryCamera';
+import Fotomaker from './screens/Fotomaker';
+import Contacten from './screens/Contacten';
+import AddScreen from './screens/AddScreen';
 
 const RootStack = createStackNavigator({
   Home: HomeScreen,
   Act: ActiviteitenLijst,
   Set: Settings,
-  Geo: Geolocation,
-  Con: Contacts,
-  Cam: TryCamera,
+  Fot: Fotomaker,
+  Con: Contacten,
+  Add: AddScreen,
 });
 
 const App = createAppContainer(RootStack);
