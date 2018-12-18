@@ -18,10 +18,6 @@ export default class ActiviteitenLijst extends Component {
         this._retrieveData();
       }
 
-      componentDidMount() {
-        this.fetchAllData();
-      }
-
       _retrieveData = async () => {
         try {
           const value = await AsyncStorage.getItem('primair_scherm');
@@ -68,111 +64,20 @@ export default class ActiviteitenLijst extends Component {
           { key: 'pluszestien', title: '+16', icon: 'beach-access', color: '#7d1935' },
           { key: 'plustwintig', title: '+20', icon: 'insert-emoticon', color: '#ff7400' },
         ],
-
-        datahome: [{"title":"failed", "description":"failed"}],
-        dataminnegen: [{"title":"failed", "description":"failed"}],
-        datamintwaalf: [{"title":"failed", "description":"failed"}],
-        dataminzestien: [{"title":"failed", "description":"failed"}],
-        datapluszestien: [{"title":"failed", "description":"failed"}],
-        dataplustwintig: [{"title":"failed", "description":"failed"}],
-
       };
 
       _handleIndexChange = index => this.setState({ index });
 
       _renderScene = BottomNavigation.SceneMap({
-        home: () => <Lijst data={this.state.datahome} stijl={styles.flatlistview_home}></Lijst>,
-        minnegen:() => <Lijst data={this.state.dataminnegen} stijl={styles.flatlistview_minnegen}></Lijst>,
-        mintwaalf: () => <Lijst data={this.state.datamintwaalf} stijl={styles.flatlistview_mintwaalf}></Lijst>,
-        minzestien: () => <Lijst data={this.state.dataminzestien} stijl={styles.flatlistview_minzestien}></Lijst>,
-        pluszestien:() => <Lijst data={this.state.datapluszestien} stijl={styles.flatlistview_pluszestien}></Lijst>,
-        plustwintig: () => <Lijst data={this.state.dataplustwintig} stijl={styles.flatlistview_plustwintig}></Lijst>,
+        home: () => <Lijst data={this.state.datahome} link={"http://www.kljzomergem.be/homeapi.php"} stijl={styles.flatlistview_home}></Lijst>,
+        minnegen:() => <Lijst data={this.state.dataminnegen} link={"http://www.kljzomergem.be/minnegenapi.php"} stijl={styles.flatlistview_minnegen}></Lijst>,
+        mintwaalf: () => <Lijst data={this.state.datamintwaalf} link={"http://www.kljzomergem.be/mintwaalfapi.php"} stijl={styles.flatlistview_mintwaalf}></Lijst>,
+        minzestien: () => <Lijst data={this.state.dataminzestien} link={"http://www.kljzomergem.be/minzestienapi.php"} stijl={styles.flatlistview_minzestien}></Lijst>,
+        pluszestien:() => <Lijst data={this.state.datapluszestien} link={"http://www.kljzomergem.be/pluszestienapi.php"} stijl={styles.flatlistview_pluszestien}></Lijst>,
+        plustwintig: () => <Lijst data={this.state.dataplustwintig} link={"http://www.kljzomergem.be/plustwintigapi.php"} stijl={styles.flatlistview_plustwintig}></Lijst>,
       });
 
-      fetchAllData(){
-        this.fetchDatahome();
-        this.fetchDataminnegen();
-        this.fetchDatamintwaalf();
-        this.fetchDataminzestien();
-        this.fetchDatapluszestien();
-        this.fetchDataplustwintig();
-        this.render();
-      }
-
-      fetchDatahome = async () => {
-        try {
-          let response = await fetch(
-            'http://www.kljzomergem.be/homeapi.php',
-          );
-          let responseJson = await response.json();
-          this.setState({ datahome: responseJson });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      fetchDataminnegen = async () => {
-        try {
-          let response = await fetch(
-            'http://www.kljzomergem.be/minnegenapi.php',
-          );
-          let responseJson = await response.json();
-          this.setState({ dataminnegen: responseJson });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      fetchDatamintwaalf = async () => {
-        try {
-          let response = await fetch(
-            'http://www.kljzomergem.be/mintwaalfapi.php',
-          );
-          let responseJson = await response.json();
-          this.setState({ datamintwaalf: responseJson });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      fetchDataminzestien = async () => {
-        try {
-          let response = await fetch(
-            'http://www.kljzomergem.be/minzestienapi.php',
-          );
-          let responseJson = await response.json();
-          this.setState({ dataminzestien: responseJson });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      fetchDatapluszestien = async () => {
-        try {
-          let response = await fetch(
-            'http://www.kljzomergem.be/pluszestienapi.php',
-          );
-          let responseJson = await response.json();
-          this.setState({ datapluszestien: responseJson });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      fetchDataplustwintig = async () => {
-        try {
-          let response = await fetch(
-            'http://www.kljzomergem.be/plustwintigapi.php',
-          );
-          let responseJson = await response.json();
-          this.setState({ dataplustwintig: responseJson });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
       render() {
-        //console.log(this.state.data);
         return (
           <PaperProvider theme={theme}>
             <Appbar.Header >

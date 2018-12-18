@@ -17,11 +17,32 @@ class FlatListItem extends Component {
 
 export default class Lijst extends Component {
 
+  componentDidMount() {
+    this.fetchDatahome();
+  }
+
+  fetchDatahome = async () => {
+    try {
+      let response = await fetch(
+        this.props.link,
+      );
+      let responseJson = await response.json();
+      console.log(responseJson);
+      this.setState({ data: responseJson });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  state = {
+    data: [{"title":"laden...", "description":" "}],
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.props.data}
+          data={this.state.data}
           renderItem={({item, index}) => {
             return(
               <FlatListItem item={item} index={index} stijl={this.props.stijl}>

@@ -1,4 +1,12 @@
 {
   "name": "kljzomergem",
-  "displayName": "kljzomergem"
+  "displayName": "kljzomergem",
+  "expo": {
+    "sdkVersion": "25.0.0",
+    "android":{
+      "package": "com.kljzomergem.myapp",
+      "versionCode": 1,
+      "permissions": []
+    }
+  }
 }
